@@ -1,29 +1,30 @@
 -- SQL-команды для создания таблиц
-CREATE TABLE employee
-(
-	id_employee int PRIMARY KEY,
-	full_name varchar(100) NOT NULL,
-	job_title varchar(50) NOT NULL
-);
-
-INSERT INTO employee VALUES (1, 'Иванов И.И.', 'менеджер');
-
 CREATE TABLE customers
 (
-    id_customers int PRIMARY KEY,
-	full_name varchar(100) NOT NULL,
-	phone_number int NOT NULL
+    customer_id varchar(50) PRIMARY KEY,
+    company_name varchar(100) NOT NULL,
+    contact_name varchar(100) NOT NULL
 );
 
-INSERT INTO customers VALUES (1, 'Васильев В.В.', 7808);
+INSERT INTO customers VALUES('AAA', 'aaa', 'aaa');
+
+CREATE TABLE employees
+(
+    employee_id int PRIMARY KEY,
+    first_name varchar(100) NOT NULL,
+    title varchar(100) NOT NULL,
+    notes text
+);
+
+INSERT INTO employees VALUES(1, 'aaa', 'aaa', 'aaa');
 
 CREATE TABLE orders
 (
-	id_orders int PRIMARY KEY,
-	name_of_product varchar(100) NOT NULL,
-	price int NOT NULL,
-	quantity int NOT NULL,
-	id_order int REFERENCES customers(id_customers) NOT NULL
-);
+    order_id int PRIMARY KEY,
+    customer_id varchar(50) REFERENCES customers(customer_id),
+    employe_id int REFERENCES employees(employee_id),
+    ship_city varchar(100) NOT NULL
+)
 
-INSERT INTO orders VALUES (101, 'apple', 1000, 10, 1);
+INSERT INTO orders VALUES(101, 'AAA', 1, 'aaa');
+

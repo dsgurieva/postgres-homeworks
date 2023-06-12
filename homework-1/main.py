@@ -6,15 +6,15 @@ with psycopg2.connect(host="localhost", database="north", user="postgres", passw
     with conn.cursor() as cur:
 
         # Добавление данных  в таблицу employee
-        cur.execute("INSERT INTO employee VALUES (%s, %s, %s)", (2, 'Петров П.П', 'менеджер'))
-        cur.execute("INSERT INTO employee VALUES (%s, %s, %s)", (3, 'Сидоров С.С.', 'менеджер'))
+        cur.execute("INSERT INTO employees VALUES (%s, %s, %s, %s)", (2, 'Петров П.П', 'менеджер', 'aaa'))
+        cur.execute("INSERT INTO employees VALUES (%s, %s, %s, %s)", (3, 'Сидоров С.С.', 'менеджер', 'aaa'))
 
         # Добавление данных  в таблицу customers
-        cur.execute("INSERT INTO customers VALUES (%s, %s, %s)", (2, 'Максимов М.М.', 7777))
-        cur.execute("INSERT INTO customers VALUES (%s, %s, %s)", (3, 'Александров А.А.', 7474))
+        cur.execute("INSERT INTO customers VALUES (%s, %s, %s)", ('BBB', 'Максимов М.М.', '7777'))
+        cur.execute("INSERT INTO customers VALUES (%s, %s, %s)", ('CCC', 'Александров А.А.', '7474'))
 
         # Добавление данных  в таблицу orders
-        cur.execute("INSERT INTO orders VALUES (%s, %s, %s, %s, %s)", (102, 'tea', 100, 10, 1))
+        cur.execute("INSERT INTO orders VALUES (%s, %s, %s, %s)", (102, 'BBB', 2, 'aaa'))
 
         # Чтение донных из таблицы customers
         cur.execute("SELECT * FROM customers")
