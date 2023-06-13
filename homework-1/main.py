@@ -1,27 +1,48 @@
 """Скрипт для заполнения данными таблиц в БД Postgres."""
 import psycopg2
+import csv
 
-with psycopg2.connect(host="localhost", database="north", user="postgres", password="1111") as conn:
 
-    with conn.cursor() as cur:
+conn = psycopg2.connect(host="localhost", database="north", user="postgres", password="1111")
+with conn:
+    with conn.cursor() as cursor:
+        with open('north_data/customers_data.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                cursor.execute(
+                    "INSERT INTO customers (customer_id, company_name, contact_name) VALUES (%s, %s, %s)",
+                    row
+                )
 
-        # Добавление данных  в таблицу employee
-        cur.execute("INSERT INTO employees VALUES (%s, %s, %s, %s)", (2, 'Петров П.П', 'менеджер', 'aaa'))
-        cur.execute("INSERT INTO employees VALUES (%s, %s, %s, %s)", (3, 'Сидоров С.С.', 'менеджер', 'aaa'))
 
-        # Добавление данных  в таблицу customers
-        cur.execute("INSERT INTO customers VALUES (%s, %s, %s)", ('BBB', 'Максимов М.М.', '7777'))
-        cur.execute("INSERT INTO customers VALUES (%s, %s, %s)", ('CCC', 'Александров А.А.', '7474'))
+conn.close()
 
-        # Добавление данных  в таблицу orders
-        cur.execute("INSERT INTO orders VALUES (%s, %s, %s, %s)", (102, 'BBB', 2, 'aaa'))
+conn = psycopg2.connect(host="localhost", database="north", user="postgres", password="1111")
 
-        # Чтение донных из таблицы customers
-        cur.execute("SELECT * FROM customers")
+with conn:
+    with conn.cursor() as cursor:
+        with open('north_data/employees_data.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                cursor.execute(
+                    "INSERT INTO employees (employee_id, first_name, last_name, title, birth_date, notes) VALUES (%s, %s, %s, %s, %s, %s)",
+                    row
+                )
 
-        rows = cur.fetchall()
-        for row in rows:
-            print(row)
+conn.close()
 
+conn = psycopg2.connect(host="localhost", database="north", user="postgres", password="1111")
+with conn:
+    with conn.cursor() as cursor:
+        with open('north_data/orders_data.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                cursor.execute(
+                    "INSERT INTO orders (order_id, customer_id, employee_id, order_date, ship_city) VALUES (%s, %s, %s, %s, %s)",
+                    row
+                )
 conn.close()
 
